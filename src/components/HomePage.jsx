@@ -1,6 +1,11 @@
+
 import "../Spotify.css";
 
 const Homepage = () => {
+  
+  
+
+
   return (
     <div className="con text-white">
       <nav className="navbar sticky-top navbar-light bg-trans">
