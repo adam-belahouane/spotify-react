@@ -426,3 +426,13 @@ body {
       background-color: transparent;
       text-decoration: none;
     }
+
+    .singlecardtext {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .listofcards {
+      overflow: hidden;
+    }

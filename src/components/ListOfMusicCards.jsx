@@ -3,7 +3,7 @@ import { Row } from "react-bootstrap";
 import LargeSingleMusicCard from "./LargeSingleMusicCard";
 
 const ListOfMusicCards = (props) => {
-  const [arrayofmusic, setArrayOfMusic] = useState(null);
+  const [arrayofmusic, setArrayOfMusic] = useState([]);
 
   const fetchMusic = async () => {
     try {
@@ -13,7 +13,7 @@ const ListOfMusicCards = (props) => {
       if (response.ok) {
         let res = await response.json();
         console.log(res);
-        setArrayOfMusic(res.data);
+        setArrayOfMusic((res.data).slice(0, 6));
       }
     } catch (error) {
       console.log(error);
@@ -22,14 +22,15 @@ const ListOfMusicCards = (props) => {
 
   useEffect(() => {
     fetchMusic();
-  }, []);
+  });
 
   return (
     <>
+    <div className="mb-3 listofcards">
       <Row className="my-4 ml-3">
         <h3>{props.name}</h3>
       </Row>
-      <Row>
+      <Row className="listofcards">
         {arrayofmusic.map((element) => (
           <LargeSingleMusicCard
             img={element.album.cover}
@@ -38,6 +39,7 @@ const ListOfMusicCards = (props) => {
           />
         ))}
       </Row>
+    </div>  
       {/* <div className="d-flex ml-2 mt-4 mb-3 row">
         <div className="col-11">
           <h3 className="mb-0">Shows to try</h3>
