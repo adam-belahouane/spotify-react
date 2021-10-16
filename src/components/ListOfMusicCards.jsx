@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { Row } from "react-bootstrap";
+import LargeSingleMusicCard from "./LargeSingleMusicCard";
 
 const ListOfMusicCards = (props) => {
   const [arrayofmusic, setArrayOfMusic] = useState(null);
@@ -7,9 +9,9 @@ const ListOfMusicCards = (props) => {
       try {
           let response = await fetch(`https://striveschool-api.herokuapp.com/api/deezer/search?q=${props.name}`)
           if(response.ok) {
-              let data = await response.json()
-              console.log(data)
-              await setArrayOfMusic(data)
+              let res = await response.json()
+              console.log(res)
+              setArrayOfMusic(res.data)
           }
       } catch (error) {
           console.log(error)
@@ -22,7 +24,15 @@ const ListOfMusicCards = (props) => {
 
   return (
     <>
-      <div className="d-flex ml-2 mt-4 mb-3 row">
+    <Row className="my-4 ml-3">
+        <h3>
+            {props.name}
+        </h3>
+    </Row>
+    <Row>
+        {arrayofmusic.map((element) => (<LargeSingleMusicCard img={element.album.cover} title={element.title} artist={element.artist.name}/>))}
+    </Row>
+      {/* <div className="d-flex ml-2 mt-4 mb-3 row">
         <div className="col-11">
           <h3 className="mb-0">Shows to try</h3>
           <h5>podcasts we think you'll get hooked on</h5>
@@ -118,7 +128,7 @@ const ListOfMusicCards = (props) => {
             <p className="card-text">Bigge Smalls</p>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };
