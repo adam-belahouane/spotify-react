@@ -1,6 +1,6 @@
 import "../Spotify.css";
 import ListOfMusicCards from "./ListOfMusicCards";
-import MyNavBar from "./MyNavBat";
+import MyNavBar from "./MyNavBar";
 
 
 const Homepage = () => {
