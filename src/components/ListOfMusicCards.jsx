@@ -22,7 +22,7 @@ const ListOfMusicCards = (props) => {
 
   useEffect(() => {
     fetchMusic();
-  });
+  }, []);
 
   return (
     <>
@@ -36,6 +36,8 @@ const ListOfMusicCards = (props) => {
             img={element.album.cover}
             title={element.title}
             artist={element.artist.name}
+            albumId={element.album.id}
+            artistId={element.artist.id}
           />
         ))}
       </Row>

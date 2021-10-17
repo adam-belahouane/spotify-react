@@ -23,7 +23,7 @@ const SmallListOfMusicCards = (props) => {
   
     useEffect(() => {
       fetchMusic();
-    });
+    }, []);
     return(
         <div className="mb-3">
       {/* <Row className="my-4 ml-3">

@@ -16,6 +16,7 @@ const Homepage = () => {
         <SmallListOfMusicCards name="tupac"/>
         <ListOfMusicCards name="bill withers"/>
         <ListOfMusicCards name="skepta"/>
+        <ListOfMusicCards name="kitaro"/>
       </div>
     </div>
   );

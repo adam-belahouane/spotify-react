@@ -10,7 +10,7 @@ const SmallSingleMusicCard = ({ img, title, artist }) => {
                 className="img-fluid img1"
                 alt="..."
               />
-              <div className="align-self-center">
+              <div className="align-self-center ">
                 <h6 className="pl-2 singlecardtext">{title}</h6>
               </div>
             </div>
