@@ -1,17 +1,21 @@
+import { Col } from "react-bootstrap"
+
 const SmallSingleMusicCard = ({ img, title, artist }) => {
     return(
-        <div className="music-card ml-3 d-none d-md-block">
-            <div className="media gm flex-fill">
+        <Col xs={12} sm={6} md={4} xl={3} className="px-2">
+        <div className="music-card ">
+            <div className="media ">
               <img
                 src={img}
-                className="mr-3 img-fluid img1"
+                className="img-fluid img1"
                 alt="..."
               />
-              <div className="media-body d-flex align-self-center">
-                <h6 className="mt-0">{title}</h6>
+              <div className="align-self-center">
+                <h6 className="pl-2 singlecardtext">{title}</h6>
               </div>
             </div>
           </div>
+          </Col>
     )
 }
 
