@@ -2,10 +2,10 @@ import { Col } from "react-bootstrap";
 
 const LargeSingleMusicCard = ({ img, title, artist }) => {
   return (
-    <Col md={3} xl={2}>
+    <Col md={3} xl={2} className="px-2">
       <div className="card music-card2">
         <img
-          className="img-fluid align-self-center mt-3 pl-3 pr-3"
+          className="img-fluid justify-self-center align-items-center px-3 py-3"
           src={img}
           alt="Card image cap"
         />

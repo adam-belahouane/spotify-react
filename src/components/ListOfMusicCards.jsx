@@ -26,11 +26,11 @@ const ListOfMusicCards = (props) => {
 
   return (
     <>
-    <div className="mb-3 listofcards">
+    <div className="mb-3">
       <Row className="my-4 ml-3">
         <h3>{props.name}</h3>
       </Row>
-      <Row className="listofcards">
+      <Row noGutters className="listofcards">
         {arrayofmusic.map((element) => (
           <LargeSingleMusicCard
             img={element.album.cover}
