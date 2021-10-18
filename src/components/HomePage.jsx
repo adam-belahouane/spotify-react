@@ -1,11 +1,12 @@
 import { useState } from "react";
+import ReactAudioPlayer from "react-audio-player";
 import "../Spotify.css";
 import ListOfMusicCards from "./ListOfMusicCards";
 import MyNavBar from "./MyNavBar";
 import SmallListOfMusicCards from "./SmallListOfMusicCards";
 
 
-const Homepage = () => {
+const Homepage = ({setTrackId}) => {
 
   const[audio, setAudio]= useState("")
 
@@ -18,12 +19,16 @@ const Homepage = () => {
         </div>
         <SmallListOfMusicCards name="J.cole"/>
         <SmallListOfMusicCards name="tupac"/>
-        <ListOfMusicCards name="bill withers" setAudio={setAudio}/>
-        <ListOfMusicCards name="skepta"/>
-        <ListOfMusicCards name="kitaro"/>
-        <audio>
-          <source src={audio} type="audio/mp3"></source>
-        </audio>
+        <ListOfMusicCards name="bill withers" setAudio={setAudio} setTrackId={setTrackId} />
+        <ListOfMusicCards name="skepta" setAudio={setAudio} setTrackId={setTrackId} />
+        <ListOfMusicCards name="kitaro" setAudio={setAudio} setTrackId={setTrackId}/>
+        <ReactAudioPlayer 
+        className="d-none"
+        src={audio}
+        controls
+        autoPlay
+        />
+        
       </div>
     </div>
   );

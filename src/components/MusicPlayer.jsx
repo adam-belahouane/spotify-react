@@ -1,7 +1,25 @@
+import { useEffect, useState } from "react";
 import { Navbar } from "react-bootstrap";
 import "../Spotify.css";
 
-const MusicPlayer = () => {
+const MusicPlayer = ({id}) => {
+  const [trackData, setTrackData] = useState([])
+
+  const fetchTrack = async(id) => {
+    try {
+      let response = await fetch(`https://striveschool-api.herokuapp.com/api/deezer/track/${id}`)
+      if(response.ok) {
+        let data = await response.json()
+        setTrackData(data)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(()=>(
+    fetchTrack(id)
+  ),[id])
   return (
     <Navbar
       fixed="bottom"
@@ -12,12 +30,12 @@ const MusicPlayer = () => {
         <div className="d-flex lmusic" style={{ width: "auto" }}>
           <img
             className="pt-3 pl-3 pb-3 mr-2"
-            src="./assets/JColeKOD.jpg"
+            src={trackData.album.cover}
             alt
           />
           <div className="d-flex flex-column">
-            <h5 className="align-self-center text-white mb-0 mt-4">KOD</h5>
-            <p className="mb-0 text-white">J.cole</p>
+            <h5 className="align-self-center text-white mb-0 mt-4">{trackData.title}</h5>
+            <p className="mb-0 text-white">{trackData.artist.name}</p>
           </div>
           <svg
             xmlns="http://www.w3.org/2000/svg"

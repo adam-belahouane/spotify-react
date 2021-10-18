@@ -60,7 +60,7 @@ const SideNav = () => {
                 <div className="card-body" id="sidebarBody">
                   <input
                     type="text"
-                    size="10vw"
+                    style={{width:"100%"}}
                     onchange="handleSearchQuery(event)"
                   />
                 </div>

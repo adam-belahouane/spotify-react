@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Row } from "react-bootstrap";
 import LargeSingleMusicCard from "./LargeSingleMusicCard";
 
-const ListOfMusicCards = ({name, setAudio}) => {
+const ListOfMusicCards = ({name, setAudio, setTrackId}) => {
   const [arrayofmusic, setArrayOfMusic] = useState([]);
 
   const fetchMusic = async () => {
@@ -40,6 +40,8 @@ const ListOfMusicCards = ({name, setAudio}) => {
             artistId={element.artist.id}
             trackaudio={element.preview}
             setAudio={setAudio}
+            setTrackId={setTrackId}
+            trackId={element.id}
           />
         ))}
       </Row>
