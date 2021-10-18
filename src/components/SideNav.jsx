@@ -1,4 +1,5 @@
 import { Row } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import "../Spotify.css";
 
 const SideNav = () => {
@@ -34,9 +35,9 @@ const SideNav = () => {
               </div>
               <div className="col-md-10">
                 <div className="card-body" id="sidebarBody">
-                  <a href="./homepage.html">
+                  <Link to={"/homepage"}>
                     <p className="card-title">Home</p>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
