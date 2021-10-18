@@ -1,4 +1,26 @@
+import { useEffect } from "react";
+import { useParams } from "react-router";
+
 const ArtistPage = () => {
+  const params = useParams()
+
+  const fetchArtist = async(id) => {
+    try {
+      let response = await fetch(`https://striveschool-api.herokuapp.com/api/deezer/artist/${id}`)
+      if(response.ok) {
+        let data = await response.json()
+        console.log(data)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+
+
+  }
+
+  useEffect(()=> {
+    fetchArtist(params.artistId)
+  }, [])
   return (
     <>
       ;

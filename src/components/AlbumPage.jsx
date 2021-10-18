@@ -1,4 +1,27 @@
+import { useEffect } from "react"
+import { useParams } from "react-router"
+
 const AlbumPage = () => {
+
+const params = useParams()
+
+const fetchAlbum = async (id) => {
+    try {
+        let response = await fetch(`https://striveschool-api.herokuapp.com/api/deezer/album/${id}`)
+        if(response.ok) {
+            let data = await response.json()
+            console.log(data)
+        }
+    } catch (error) {
+        console.log(error)
+    }
+
+}
+
+useEffect(() => {
+    fetchAlbum(params.albumId)
+}, [])
+
     return(
         <>
         ;<>
