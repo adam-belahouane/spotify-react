@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { Row } from "react-bootstrap";
 import LargeSingleMusicCard from "./LargeSingleMusicCard";
 
-const ListOfMusicCards = (props) => {
+const ListOfMusicCards = ({name, setAudio}) => {
   const [arrayofmusic, setArrayOfMusic] = useState([]);
 
   const fetchMusic = async () => {
     try {
       let response = await fetch(
-        `https://striveschool-api.herokuapp.com/api/deezer/search?q=${props.name}`
+        `https://striveschool-api.herokuapp.com/api/deezer/search?q=${name}`
       );
       if (response.ok) {
         let res = await response.json();
@@ -28,7 +28,7 @@ const ListOfMusicCards = (props) => {
     <>
     <div className="mb-3">
       <Row className="my-4 ml-3">
-        <h3>{props.name}</h3>
+        <h3>{name}</h3>
       </Row>
       <Row noGutters className="listofcards">
         {arrayofmusic.map((element) => (
@@ -38,6 +38,8 @@ const ListOfMusicCards = (props) => {
             artist={element.artist.name}
             albumId={element.album.id}
             artistId={element.artist.id}
+            trackaudio={element.preview}
+            setAudio={setAudio}
           />
         ))}
       </Row>

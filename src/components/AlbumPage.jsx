@@ -7,6 +7,7 @@ const AlbumPage = () => {
   const params = useParams();
   const[album, setAlbum] = useState([])
   const[albumL, setAlbumL] = useState(null)
+  const[name, setName] = useState("")
 
   const fetchAlbum = async (id) => {
     try {
@@ -16,8 +17,9 @@ const AlbumPage = () => {
       if (response.ok) {
         let data = await response.json();
         console.log(data);
-        setAlbum(data)
+        await setAlbum(data)
         await setAlbumL(data.tracks.data.length)
+        setName(data.artist.name)
         console.log(albumL)
       }
     } catch (error) {
@@ -53,7 +55,7 @@ const AlbumPage = () => {
             </Row>
             <Row>
             <small style={{ fontSize: 15 }}>
-                    <strong>{album.artist.name} •</strong> {album.release_date} • {albumL} songs, 1 hr 19mins
+                    <strong>{name} •</strong> {album.release_date} • {albumL} songs, 1 hr 19mins
                   </small>
             </Row>
             </Col>
