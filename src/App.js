@@ -6,6 +6,7 @@ import SideNav from './components/SideNav';
 import Homepage from './components/HomePage';
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import AlbumPage from './components/AlbumPage';
+import ArtistPage from './components/ArtistPage';
 
 
 function App() {
@@ -16,7 +17,7 @@ function App() {
       <Switch>
         <Route path="/homepage" component={Homepage} />
         <Route path="/album/:albumId" component={AlbumPage}/>
-        <Route path="/artist/:artistId" />
+        <Route path="/artist/:artistId" component={ArtistPage} />
         <Route render={() => <Redirect to="/homepage" />} />
        </Switch>
     <MusicPlayer/>
