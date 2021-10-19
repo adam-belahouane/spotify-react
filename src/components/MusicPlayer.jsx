@@ -4,6 +4,7 @@ import "../Spotify.css";
 
 const MusicPlayer = ({id}) => {
   const [trackData, setTrackData] = useState([])
+  const[cover, setCover] = useState("")
 
   const fetchTrack = async(id) => {
     try {
@@ -11,6 +12,7 @@ const MusicPlayer = ({id}) => {
       if(response.ok) {
         let data = await response.json()
         setTrackData(data)
+        setCover(data.album.cover)
       }
     } catch (error) {
       console.log(error)
@@ -30,11 +32,11 @@ const MusicPlayer = ({id}) => {
         <div className="d-flex lmusic" style={{ width: "auto" }}>
           <img
             className="pt-3 pl-3 pb-3 mr-2"
-            src={trackData.album.cover}
+            src={cover}
             alt
           />
           <div className="d-flex flex-column">
-            <h5 className="align-self-center text-white mb-0 mt-4">{trackData.title}</h5>
+            <h5 className="align-self-center text-white mb-0 mt-4">{trackData.title_short}</h5>
             <p className="mb-0 text-white">{trackData.artist.name}</p>
           </div>
           <svg
