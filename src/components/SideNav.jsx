@@ -1,8 +1,20 @@
+import { useEffect, useState } from "react";
 import { Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import "../Spotify.css";
 
 const SideNav = () => {
+  const[search, setSearch] = useState("")
+  let h = useHistory()
+  const handleChange = (e) => {
+    
+    setSearch(e.target.value)
+    h.push(`/search/${search}`)
+  }
+
+  useEffect(()=>{
+
+  }, [])
   return (
     <div className="sidebarcon">
       <div>
@@ -61,7 +73,8 @@ const SideNav = () => {
                   <input
                     type="text"
                     style={{width:"100%"}}
-                    onchange="handleSearchQuery(event)"
+                    value={search}
+                    onChange={handleChange}
                   />
                 </div>
               </div>
