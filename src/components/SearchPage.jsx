@@ -1,32 +1,25 @@
 import { useEffect, useState } from "react";
+import ReactAudioPlayer from "react-audio-player";
 import { useParams } from "react-router";
+import MyNavBar from "./MyNavBar";
+import SearchMusicCardList from "./SearchMusicCardList";
 
-const SearchPage = () => {
+const SearchPage = ({setTrackId}) => {
   const params = useParams();
 
-  const [arrayofmusic, setArrayOfMusic] = useState([]);
+  const[audio, setAudio]= useState("")
 
-  const fetchMusic = async () => {
-    try {
-      let response = await fetch(
-        `https://striveschool-api.herokuapp.com/api/deezer/search?q=${params.query}`
-      );
-      if (response.ok) {
-        let res = await response.json();
-        console.log(res);
-        setArrayOfMusic(res.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
-  useEffect(() => {
-    fetchMusic();
-  }, []);
   return (
     <div className="con">
-      <h1>{params.query}</h1>
+    <MyNavBar />
+      <SearchMusicCardList setAudio={setAudio} setTrackId={setTrackId} name={params.query} />
+      <ReactAudioPlayer 
+        className="d-none"
+        src={audio}
+        controls
+        autoPlay
+        />
     </div>
   );
 };

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Row } from "react-bootstrap";
 import LargeSingleMusicCard from "./LargeSingleMusicCard";
 
-const ListOfMusicCards = ({name, setAudio, setTrackId}) => {
+const SearchMusicCardList = ({name, setAudio, setTrackId}) => {
   const [arrayofmusic, setArrayOfMusic] = useState([]);
 
   const fetchMusic = async () => {
@@ -13,7 +13,7 @@ const ListOfMusicCards = ({name, setAudio, setTrackId}) => {
       if (response.ok) {
         let res = await response.json();
         console.log(res);
-        setArrayOfMusic((res.data).slice(0, 6));
+        setArrayOfMusic(res.data);
       }
     } catch (error) {
       console.log(error);
@@ -22,7 +22,7 @@ const ListOfMusicCards = ({name, setAudio, setTrackId}) => {
 
   useEffect(() => {
     fetchMusic();
-  }, []);
+  }, [name]);
 
   return (
     <>
@@ -30,7 +30,7 @@ const ListOfMusicCards = ({name, setAudio, setTrackId}) => {
       <Row className="my-4 ml-3">
         <h3>{name}</h3>
       </Row>
-      <Row noGutters className="listofcards">
+      <Row noGutters className="listofsearchcards">
         {arrayofmusic.map((element) => (
           <LargeSingleMusicCard
             img={element.album.cover}
@@ -50,4 +50,4 @@ const ListOfMusicCards = ({name, setAudio, setTrackId}) => {
   );
 };
 
-export default ListOfMusicCards;
+export default SearchMusicCardList;

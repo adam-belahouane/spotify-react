@@ -25,7 +25,7 @@ const App = () => {
           <Route path="/homepage" render={(props) => (<Homepage setTrackId={setTrackId} {...props} />)} />
           <Route path="/album/:albumId" component={AlbumPage} />
           <Route path="/artist/:artistId" component={ArtistPage} />
-          <Route path="/search/:query" render={(props) => (<SearchPage {...props}/>)} />
+          <Route path="/search/:query" render={(props) => (<SearchPage setTrackId={setTrackId} {...props}/>)} />
           <Route render={() => <Redirect to="/homepage" />} />
           <Homepage setTrackId={setTrackId} />
         </Switch>

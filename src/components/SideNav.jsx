@@ -6,10 +6,18 @@ import "../Spotify.css";
 const SideNav = () => {
   const[search, setSearch] = useState("")
   let h = useHistory()
-  const handleChange = (e) => {
+  const handleChange = async(e) => {
     
-    setSearch(e.target.value)
+    await setSearch(e.target.value)
+    if(search.length >2){
+
+      x()
+    }
+  }
+  
+  const x = () => {
     h.push(`/search/${search}`)
+
   }
 
   useEffect(()=>{
@@ -74,7 +82,7 @@ const SideNav = () => {
                     type="text"
                     style={{width:"100%"}}
                     value={search}
-                    onChange={handleChange}
+                    onChange={(e) => (handleChange(e))}
                   />
                 </div>
               </div>
