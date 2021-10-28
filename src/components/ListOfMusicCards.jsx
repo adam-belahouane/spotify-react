@@ -22,7 +22,7 @@ const ListOfMusicCards = ({name, setAudio, setTrackId}) => {
 
   useEffect(() => {
     fetchMusic();
-  }, []);
+  }, [name]);
 
   return (
     <>

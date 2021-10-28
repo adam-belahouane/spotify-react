@@ -31,7 +31,7 @@ const AlbumPage = () => {
 
   useEffect(() => {
     fetchAlbum(params.albumId);
-  }, []);
+  }, [params.albumId]);
 
   return (
     <div className="con">

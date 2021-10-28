@@ -8,7 +8,7 @@ const TrackList = (props) => {
                 <Row>{props.title}</Row>
                 <Row>{props.artist}</Row>
             </Col>
-            <Col md={1}>{props.duration}</Col>
+            <Col md={1}>{Math.floor(props.duration/60)+ ":" +props.duration%60}</Col>
         </Row>
     )
 }
