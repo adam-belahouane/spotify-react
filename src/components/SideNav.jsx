@@ -6,17 +6,17 @@ import "../Spotify.css";
 const SideNav = () => {
   const[search, setSearch] = useState("")
   let h = useHistory()
-  const handleChange = async(e) => {
+  const handleChange = async(value) => {
     
-    await setSearch(e.target.value)
+    await setSearch(value)
     if(search.length >2){
 
-      x()
+      x(value)
     }
   }
   
-  const x = () => {
-    h.push(`/search/${search}`)
+  const x = (v) => {
+    h.push(`/search/${v}`)
 
   }
 
@@ -81,8 +81,8 @@ const SideNav = () => {
                   <input
                     type="text"
                     style={{width:"100%"}}
+                    onChange={(e) => (handleChange(e.target.value))}
                     value={search}
-                    onChange={(e) => (handleChange(e))}
                   />
                 </div>
               </div>
