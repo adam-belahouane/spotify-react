@@ -1,14 +1,12 @@
 import { useState } from "react";
-import ReactAudioPlayer from "react-audio-player";
+
 import "../Spotify.css";
 import ListOfMusicCards from "./ListOfMusicCards";
 import MyNavBar from "./MyNavBar";
 import SmallListOfMusicCards from "./SmallListOfMusicCards";
 
 
-const Homepage = ({setTrackId}) => {
-
-  const[audio, setAudio]= useState("")
+const Homepage = ({setTrackId, setAudio}) => {
 
   return (
     <div className="con text-white">
@@ -22,12 +20,7 @@ const Homepage = ({setTrackId}) => {
         <ListOfMusicCards name="bill withers" setAudio={setAudio} setTrackId={setTrackId} />
         <ListOfMusicCards name="skepta" setAudio={setAudio} setTrackId={setTrackId} />
         <ListOfMusicCards name="kitaro" setAudio={setAudio} setTrackId={setTrackId}/>
-        <ReactAudioPlayer 
-        className="d-none"
-        src={audio}
-        controls
-        autoPlay
-        />
+        
         
       </div>
     </div>

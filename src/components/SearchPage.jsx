@@ -4,22 +4,22 @@ import { useParams } from "react-router";
 import MyNavBar from "./MyNavBar";
 import SearchMusicCardList from "./SearchMusicCardList";
 
-const SearchPage = ({setTrackId}) => {
+const SearchPage = ({setTrackId, setAudio}) => {
   const params = useParams();
 
-  const[audio, setAudio]= useState("")
+  // const[audio, setAudio]= useState("")
 
 
   return (
     <div className="con">
     <MyNavBar />
       <SearchMusicCardList setAudio={setAudio} setTrackId={setTrackId} name={params.query} />
-      <ReactAudioPlayer 
+      {/* <ReactAudioPlayer 
         className="d-none"
         src={audio}
         controls
         autoPlay
-        />
+        /> */}
     </div>
   );
 };

@@ -1,29 +1,65 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Navbar } from "react-bootstrap";
-import "../Spotify.css";
+import "../../Spotify.css";
+import "./style.css";
+import ReactAudioPlayer from "react-audio-player";
+import { ReactComponent as Play } from "../../svg/play.svg"
+import { ReactComponent as Pause } from "../../svg/pause.svg";
 
-const MusicPlayer = ({id}) => {
-  const [trackData, setTrackData] = useState([])
-  const[cover, setCover] = useState("")
-  const[name, setName] = useState("")
+const MusicPlayer = ({ id, srcaudio }) => {
+  const [trackData, setTrackData] = useState([]);
+  const [cover, setCover] = useState("");
+  const [name, setName] = useState("");
+  const [playing, setPlaying] = useState(false)
 
-  const fetchTrack = async(id) => {
-    try {
-      let response = await fetch(`https://striveschool-api.herokuapp.com/api/deezer/track/${id}`)
-      if(response.ok) {
-        let data = await response.json()
-        setTrackData(data)
-        setCover(data.album.cover)
-        setName(data.artist.name)
+  const audio = document.getElementsByTagName("audio")[0]
+
+  const toggle = () =>{
+    if(srcaudio) {
+      setPlaying(!playing)
+      if(playing === true) {
+        audio.pause()
+      } else {
+        audio.play()
       }
-    } catch (error) {
-      console.log(error)
+
+    } else {
+      console.log("no source")
     }
   }
 
-  useEffect(()=>(
+  const autoPlay = () => {
+    if(srcaudio) {
+      setPlaying(false)
+      setPlaying(true)
+      audio.play()
+
+    } else {
+      console.log('no source')
+    }
+  }
+  
+
+  const fetchTrack = async (id) => {
+    try {
+      let response = await fetch(
+        `https://striveschool-api.herokuapp.com/api/deezer/track/${id}`
+      );
+      if (response.ok) {
+        let data = await response.json();
+        setTrackData(data);
+        setCover(data.album.cover);
+        setName(data.artist.name);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
     fetchTrack(id)
-  ),[id])
+    autoPlay()
+  }, [id]);
   return (
     <Navbar
       fixed="bottom"
@@ -32,13 +68,11 @@ const MusicPlayer = ({id}) => {
     >
       <div className="music-player d-flex justify-content-around">
         <div className="d-flex lmusic" style={{ width: "auto" }}>
-          <img
-            className="pt-3 pl-3 pb-3 mr-2"
-            src={cover}
-            alt
-          />
+          <img className="pt-3 pl-3 pb-3 mr-2" src={cover} alt />
           <div className="d-flex flex-column">
-            <h5 className="align-self-center text-white mb-0 mt-4">{trackData.title_short}</h5>
+            <h5 className="align-self-center text-white mb-0 mt-4">
+              {trackData.title_short}
+            </h5>
             <p className="mb-0 text-white">{name}</p>
           </div>
           <svg
@@ -95,16 +129,7 @@ const MusicPlayer = ({id}) => {
                 d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5zM10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5z"
               />
             </svg>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width={35}
-              height={35}
-              fill="white"
-              className="bi bi-play-circle-fill mr-4"
-              viewBox="0 0 16 16"
-            >
-              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z" />
-            </svg>
+            {playing === false? <Play onClick={toggle}/> : <Pause onClick={toggle} />}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width={20}
@@ -135,7 +160,7 @@ const MusicPlayer = ({id}) => {
           </div>
           <div className="d-flex align-items-center">
             <p className="p-music pr-1">0:00</p>
-            <input type="range" name id="slider" className="mb-3" />
+            <input type="range" className="mb-3 main-slider" value={10} />
             <p className="p-music pl-1">5:00</p>
           </div>
         </div>
@@ -178,8 +203,9 @@ const MusicPlayer = ({id}) => {
             <path d="M10.121 12.596A6.48 6.48 0 0 0 12.025 8a6.48 6.48 0 0 0-1.904-4.596l-.707.707A5.483 5.483 0 0 1 11.025 8a5.483 5.483 0 0 1-1.61 3.89l.706.706z" />
             <path d="M10.025 8a4.486 4.486 0 0 1-1.318 3.182L8 10.475A3.489 3.489 0 0 0 9.025 8c0-.966-.392-1.841-1.025-2.475l.707-.707A4.486 4.486 0 0 1 10.025 8zM7 4a.5.5 0 0 0-.812-.39L3.825 5.5H1.5A.5.5 0 0 0 1 6v4a.5.5 0 0 0 .5.5h2.325l2.363 1.89A.5.5 0 0 0 7 12V4zM4.312 6.39 6 5.04v5.92L4.312 9.61A.5.5 0 0 0 4 9.5H2v-3h2a.5.5 0 0 0 .312-.11z" />
           </svg>
-          <input type="range" id="slider2" />
+          <input type="range" className="volume-slider" value={10} />
         </div>
+        <audio className="d-none" src={srcaudio}></audio>
       </div>
     </Navbar>
   );
