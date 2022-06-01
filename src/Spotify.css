@@ -139,53 +139,12 @@ body {
   }
   /* music player end */
   
-  .sidebarcon{
-    position: absolute;
-    top: 0;
-    width: 17vw;
-    height: 90vh;
-    overflow: hidden;
-    background-color: black;
-    padding-left: 2vw;
-    padding-right: 1vw;
-    padding-top: 2vh;
-  }
   
   
   .line {
     border-bottom: 0.5px solid grey;
   }
   
-  #sideBar {
-    height: 20px;
-    margin-bottom: 0%;
-    color: grey;
-    font-weight: bold;
-  }
-  
-  .sideImg {
-    vertical-align: 50%;
-  }
-  
-  #sidebarBody {
-    padding: 0%;
-  }
-  
-  .sidebar-ul {
-    height: 400px;
-    width: 411px;
-    overflow: auto;
-    list-style-type: none;
-    font-size: 10px;
-    color: grey;
-    padding: 0%;
-    font-weight: 280;
-    position: relative;
-  }
-  
-  li {
-    margin-top: 10px;
-  }
   
   /* width */
   ::-webkit-scrollbar {
