@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import MusicPlayer from "./components/MusicPlayer/MusicPlayer"
@@ -14,22 +13,21 @@ import AlbumPage from "./components/AlbumPage";
 import ArtistPage from "./components/ArtistPage";
 import { useState, useEffect } from "react";
 import SearchPage from "./components/SearchPage";
-import Login from "./components/Login";
+import { useDispatch } from "react-redux";
+import { setAccessTokenAction } from "./redux/actions";
+
 
 const clientId = "bb017f5cd6144773b350a847fa205a51"
-const clientSecret = "949d5ecbc28c473bbc17700c6c9ba5a4"
+const clientSecret = process.env.REACT_APP_API_SECRET
 
 const App = () => {
   const[trackId, setTrackId] = useState("2312047")
   const[audio, setAudio] = useState("")
-  const [accessToken, setAccessToken] = useState(null);
-  const [someData, setSomeData] = useState([])
+  const dispatch = useDispatch()
 
   useEffect(() => {
 
     handleLogin()
-    
-    fetchBrowseAll(accessToken)
 
   }, [])
 
@@ -51,10 +49,7 @@ const App = () => {
 
       if (res.status === 200) {
         const json = await res.json()
-        console.log(json)
-
-        localStorage.setItem("accessToken", json.access_token)
-        setAccessToken(json.access_token)
+        dispatch(setAccessTokenAction(json.access_token))
       }
       console.log(res)
 
@@ -63,24 +58,6 @@ const App = () => {
     }
   }
 
-
-  const fetchBrowseAll = async (token) => {
-    try {
-      let response = await fetch(`https://api.spotify.com/v1/browse/categories?country=GB`, {
-        headers: {
-          "Authorization": "Bearer " + token
-        }
-      })
-
-      if (response.ok) {
-        const json = await response.json()
-
-        setSomeData(json)
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
   return (
     <>
       <Router>
