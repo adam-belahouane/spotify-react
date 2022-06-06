@@ -1,22 +1,12 @@
 import { useEffect, useState } from "react";
 import { Row } from "react-bootstrap";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../styles/sidebar.css";
 import logo from "../assets/spotify_white.png";
 
 const SideNav = () => {
   const [selected, setSelected] = useState("Home");
-  let h = useHistory();
-  // const handleChange = async (value) => {
-  //   await setSearch(value);
-  //   if (search.length > 2) {
-  //     x(value);
-  //   }
-  // };
-
-  // const x = (v) => {
-  //   h.push(`/search/${v}`);
-  // };
+ 
 
   return (
     <div className="sidebarcon">
