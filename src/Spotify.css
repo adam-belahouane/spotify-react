@@ -67,9 +67,7 @@ body {
     border: 1px;
     border-radius: 5px;
   }
-  .card-text {
-    color: rgb(255, 255, 255, 0.4);
-  }
+  
   /* music player css */
   
   .music-player{
@@ -386,11 +384,7 @@ body {
       text-decoration: none;
     }
 
-    .singlecardtext {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
+    
 
     .listofcards {
       flex-wrap: nowrap !important;

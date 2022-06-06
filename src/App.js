@@ -15,6 +15,7 @@ import { useState, useEffect } from "react";
 import SearchPage from "./components/SearchPage";
 import { useDispatch } from "react-redux";
 import { setAccessTokenAction } from "./redux/actions";
+import Main from "./pages/Main";
 
 
 const clientId = "bb017f5cd6144773b350a847fa205a51"
@@ -63,7 +64,7 @@ const App = () => {
       <Router>
         <SideNav  />
         <Switch>
-          <Route path="/homepage" render={(props) => (<Homepage setTrackId={setTrackId} setAudio={setAudio} {...props} />)} />
+          <Route path="/homepage" render={(props) => (<Main setTrackId={setTrackId} setAudio={setAudio} {...props} />)} />
           <Route path="/album/:albumId" component={AlbumPage} />
           <Route path="/artist/:artistId" component={ArtistPage} />
           <Route path="/search/:query" render={(props) => (<SearchPage setTrackId={setTrackId} setAudio={setAudio} {...props}/>)} />

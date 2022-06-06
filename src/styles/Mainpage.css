@@ -1,0 +1,45 @@
+.singlecardtext {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: white;
+}
+
+.card-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: rgb(255, 255, 255, 0.4);
+}
+
+.artists-card {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  background-color: rgb(255, 255, 255, 0.1) !important;
+  width: auto;
+  height: auto;
+  border: 1px;
+  border-radius: 5px;
+  
+}
+
+.artists-card:hover {
+    background-color: rgb(255, 255, 255, 0.2) !important;
+}
+
+.artists-card-img-container{
+    padding-top: 20px;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+.artists-card-img{
+    max-width: 100%;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
