@@ -16,7 +16,6 @@ const LargeSingleMusicCard = ({ img, title, artist, albumId, artistId, setAudio,
           className="img-fluid justify-self-center align-items-center px-3 py-3"
           src={img}
           alt="Card image cap"
-          onClick={() => handleClick()}
         />
         <div className="card-body">
           <Link to={"/album/" + albumId }>

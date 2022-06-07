@@ -21,25 +21,106 @@
   height: auto;
   border: 1px;
   border-radius: 5px;
-  
 }
 
 .artists-card:hover {
-    background-color: rgb(255, 255, 255, 0.2) !important;
+  background-color: rgb(255, 255, 255, 0.2) !important;
 }
 
-.artists-card-img-container{
-    padding-top: 20px;
-    display: flex;
-    align-content: center;
-    justify-content: center;
+.artists-card-img-container {
+  padding-top: 20px;
+  display: flex;
+  align-content: center;
+  justify-content: center;
 }
 
-.artists-card-img{
-    max-width: 100%;
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
+.artists-card-img {
+  max-width: 100%;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
+.album-info {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+}
+
+.album-type-text {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.album-name-text {
+  visibility: visible;
+  width: 100%;
+  line-height: 72px;
+  font-size: 72px;
+  font-weight: 900;
+  margin-bottom: 10px;
+}
+
+.year {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+}
+
+.green-play-btn {
+  color:rgb(30, 215, 96);
+  margin-right: 20px;
+}
+
+.heart-btn {
+  color: rgba(255, 255, 255, 0.7);
+  margin-right: 20px;
+}
+
+.tracklist-header{
+  border-bottom: solid 1px rgba(255, 255, 255, 0.2);
+  padding-bottom: 10px;
+}
+
+p {
+  margin: 0;
+}
+
+.titleandhash{
+  display: flex;
+  flex-direction: row;
+}
+
+.hash{
+  width: 30px;
+}
+
+.tracklist-name-artist{
+  display: flex;
+  flex-direction: column;
+}
+
+.tracklist-name{
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.tracklist-artist{
+  font-size: 16px;
+  font-weight: 400;
+  color: rgb(179, 179, 179);
+}
+
+.tracklist-number-container{
+  width: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.tracklist-number{
+  text-align: right;
+}

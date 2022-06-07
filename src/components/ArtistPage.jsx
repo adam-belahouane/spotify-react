@@ -40,7 +40,6 @@ const ArtistPage = () => {
   return (
     <>
       <div className="con">
-        <MyNavBar />
         <div className="row ">
           <div className="col-12 col-md-8">
             <div className="row">
@@ -89,7 +88,6 @@ const ArtistPage = () => {
             <TrackList number={albumL.indexOf(track) + 1} key={track.id} title={track.title} artist={track.artist.name} duration={track.duration}  />
           ))
         }
-        <ListOfMusicCards name={name} />
 
       </div>
       </div>
