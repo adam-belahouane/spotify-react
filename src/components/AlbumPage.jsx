@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import { useParams } from "react-router";
-import ListOfMusicCards from "./ListOfMusicCards";
+import LargeSingleMusicCard from "./LargeSingleMusicCard";
 import MyNavBar from "./MyNavBar";
 import TrackList from "./TrackList";
 import { useSelector } from "react-redux";
@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 const AlbumPage = () => {
   const params = useParams();
   const [album, setAlbum] = useState([]);
-  const [albumL, setAlbumL] = useState([]);
+  const [artistAlbums, setArtistAlbums] = useState([]);
   const [trackList, setTrackList] = useState([]);
   const token = useSelector((state) => state.login.accesstoken);
   const ApiUrl = process.env.REACT_APP_API_URL;
@@ -26,6 +26,24 @@ const AlbumPage = () => {
         console.log(json);
         setAlbum(json);
         setTrackList(json.tracks.items);
+        fetchArtistAlbums(json.artists[0].id);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchArtistAlbums = async (id) => {
+    try {
+      const res = await fetch(`${ApiUrl}artists/${id}/albums`, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+      if (res.ok) {
+        const json = await res.json();
+        console.log(json);
+        setArtistAlbums(json.items);
       }
     } catch (error) {
       console.log(error);
@@ -34,7 +52,7 @@ const AlbumPage = () => {
 
   useEffect(() => {
     fetchAlbum(params.albumId);
-  }, []);
+  }, [params.albumId]);
 
   if (album.length < 1) {
     return <></>;
@@ -129,6 +147,23 @@ const AlbumPage = () => {
             />
           ))}
         </div>
+
+        <Row className="mx-5">
+          <Row className="my-4">
+            <h3 className="more-by">More by {album.artists[0].name}</h3>
+          </Row>
+          <Row noGutters className="listofcards mb-5">
+            {artistAlbums.map((element) => (
+              <LargeSingleMusicCard
+                img={element.images[1].url}
+                title={element.name}
+                artist={element.release_date}
+                albumId={element.id}
+                artistId={element.artists[0].id}
+              />
+            ))}
+          </Row>
+        </Row>
       </div>
     );
   }

@@ -124,3 +124,9 @@ p {
 .tracklist-number{
   text-align: right;
 }
+
+.more-by{
+  color: white;
+  font-weight: 700;
+  font-size: 24px;
+}
