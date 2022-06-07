@@ -160,6 +160,7 @@ const AlbumPage = () => {
                 artist={element.release_date}
                 albumId={element.id}
                 artistId={element.artists[0].id}
+                isPlayList={false}
               />
             ))}
           </Row>

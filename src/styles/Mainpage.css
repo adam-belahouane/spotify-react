@@ -102,9 +102,14 @@ p {
 .tracklist-name-artist{
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .tracklist-name{
+  overflow: hidden;
+  text-overflow: ellipsis;
   font-size: 16px;
   font-weight: 500;
 }
