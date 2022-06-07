@@ -1,0 +1,8 @@
+.playlist-container-page{
+    position: relative;
+    left: 17vw;
+    width: 83vw;
+    height: 90vh;
+    overflow-x: hidden;
+    background-color: #121212;
+}

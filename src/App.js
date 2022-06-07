@@ -11,6 +11,7 @@ import SearchPage from "./components/SearchPage";
 import { useDispatch } from "react-redux";
 import { setAccessTokenAction } from "./redux/actions";
 import Main from "./pages/Main";
+import Playlistpage from "./pages/Playlistpage";
 
 
 const clientId = "bb017f5cd6144773b350a847fa205a51"
@@ -62,8 +63,8 @@ const App = () => {
           <Route path="/" element={<Main setTrackId={setTrackId} setAudio={setAudio} />} />
           <Route path="/album/:albumId" element={<AlbumPage/>} />
           <Route path="/artist/:artistId" element={<ArtistPage/>} />
+          <Route path="/playlist/:playlistId" element={<Playlistpage/>} />
           <Route path="/search/:query" render={(props) => (<SearchPage setTrackId={setTrackId} setAudio={setAudio} {...props}/>)} />
-          
         </Routes>
         <MusicPlayer id={trackId} srcaudio={audio} />
      

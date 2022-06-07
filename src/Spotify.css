@@ -1,11 +1,4 @@
-body {
-    background: rgb(105, 9, 9);
-    background: linear-gradient(
-      180deg,
-      rgba(105, 9, 9, 0.9304096638655462) 9%,
-      rgba(0, 0, 0, 1) 37%
-    );
-  }
+
  
   .btn {
     height: auto;
@@ -37,6 +30,11 @@ body {
     padding: 0 !important;
   }
   .con {
+    background: linear-gradient(
+      180deg,
+      rgba(105, 9, 9, 0.9304096638655462) 9%,
+      rgba(18, 18, 18, 1) 37%
+    );
     position: relative;
     left: 17vw;
     width: 83vw;
