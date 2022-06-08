@@ -122,8 +122,20 @@ p {
   text-align: right;
 }
 
+.light-white{
+  color: rgba(255, 255, 255, 0.6);
+}
+
 .more-by{
   color: white;
   font-weight: 700;
   font-size: 24px;
+}
+
+.cursor{
+  cursor: pointer;
+}
+
+.cursor:hover{
+  color: white;
 }

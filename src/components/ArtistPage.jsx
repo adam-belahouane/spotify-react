@@ -1,66 +1,131 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import MyNavBar from "./MyNavBar";
 import TrackList from "./TrackList";
-import ListOfMusicCards from "./ListOfMusicCards";
+import { useSelector } from "react-redux";
+import { Row, Col } from "react-bootstrap";
+import ArtistCard from "./ArtistCard";
+import LargeSingleMusicCard from "./LargeSingleMusicCard";
 
 const ArtistPage = () => {
-
   const params = useParams();
-  const [album, setAlbum] = useState([]);
-  const [albumL, setAlbumL] = useState([]);
-  const [name, setName] = useState("");
+  const token = useSelector((state) => state.login.accesstoken);
+  const ApiUrl = process.env.REACT_APP_API_URL;
+  const [artist, setArtist] = useState([]);
+  const [artistTopTracks, setArtistTopTracks] = useState([]);
+  const [artistList, setArtistList] = useState([]);
+  const [artistAlbums, setArtistAlbums] = useState([]);
+  const [toggleMore, setToggleMore] = useState(5);
 
-  const fetchArtist = async(id) => {
+  const fetchArtist = async (id) => {
     try {
-      console.log(id)
-      let response = await fetch(`https://striveschool-api.herokuapp.com/api/deezer/artist/${id}`)
-      if(response.ok) {
-        let data = await response.json()
-        let secondReponse = await fetch(data.tracklist)
-        let topSongsData = await secondReponse.json()
-        console.log(topSongsData)
-        console.log(data)
-        setAlbum(data);
-        setAlbumL(data.tracks.data);
-        setName(data.name);
-        console.log(name)
-        console.log(albumL);
+      const res = await fetch(`${ApiUrl}artists/${id}`, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+      if (res.ok) {
+        const json = await res.json();
+        setArtist(json);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
+  };
 
+  const fetchArtistTopTracks = async (id) => {
+    try {
+      const res = await fetch(`${ApiUrl}artists/${id}/top-tracks?country=GB`, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+      if (res.ok) {
+        const json = await res.json();
+        setArtistTopTracks(json.tracks);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  const fetchRelatedArtist = async (id) => {
+    try {
+      const res = await fetch(`${ApiUrl}artists/${id}/related-artists`, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+      if (res.ok) {
+        const json = await res.json();
+        setArtistList(json.artists);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchArtistAlbums = async (id) => {
+    try {
+      const res = await fetch(`${ApiUrl}artists/${id}/albums`, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+      if (res.ok) {
+        const json = await res.json();
+        console.log(json);
+        setArtistAlbums(json.items);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchArtist(params.artistId);
+    fetchArtistTopTracks(params.artistId);
+    fetchRelatedArtist(params.artistId);
+    fetchArtistAlbums(params.artistId);
+  }, [params.artistId]);
+  if (artist.length < 1) {
+    return (
+      <div className="con">
+        <h1>Loading</h1>
+      </div>
+    );
   }
-
-  useEffect(()=> {
-    fetchArtist(params.artistId)
-  }, [params.artistId])
   return (
     <>
       <div className="con">
-        <div className="row ">
+        <Row className="text-white my-5 mx-4 px-1">
+          <Col md={3}>
+            <img src={artist.images[0].url} className="img-fluid" />
+          </Col>
+          <Col className="album-info" md={9}>
+            <Row>
+              <div className="text-muted my-1">Verified Artist</div>
+            </Row>
+            <Row>
+              <span className="album-name-text"> {artist.name}</span>
+            </Row>
+            <Row>
+              <small style={{ fontSize: 15 }}>{artist.followers.total}</small>
+            </Row>
+          </Col>
+        </Row>
+        <div className="row mx-4">
           <div className="col-12 col-md-8">
             <div className="row">
-              <div id="pause">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width={45}
-                  height={45}
-                  fill="currentColor"
-                  className="bi bi-pause-circle-fill"
-                  viewBox="0 0 16 16"
-                  style={{
-                    color: "#1ed760",
-                    backgroundColor: "white",
-                    borderRadius: 26,
-                    borderColor: "rgb(64, 197, 64)",
-                  }}
-                >
-                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.25 5C5.56 5 5 5.56 5 6.25v3.5a1.25 1.25 0 1 0 2.5 0v-3.5C7.5 5.56 6.94 5 6.25 5zm3.5 0c-.69 0-1.25.56-1.25 1.25v3.5a1.25 1.25 0 1 0 2.5 0v-3.5C11 5.56 10.44 5 9.75 5z" />
-                </svg>
-              </div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="50"
+                height="50"
+                fill="currentColor"
+                className="bi bi-play-circle-fill green-play-btn"
+                viewBox="0 0 16 16"
+              >
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z" />
+              </svg>
               <div id="follow">
                 <p style={{ position: "absolute", top: "20%", left: "15%" }}>
                   follow
@@ -82,14 +147,58 @@ const ArtistPage = () => {
             </div>
           </div>
         </div>
-        <div className="listoftracks">
-        {
-          albumL.map((track) => (
-            <TrackList number={albumL.indexOf(track) + 1} key={track.id} title={track.title} artist={track.artist.name} duration={track.duration}  />
-          ))
-        }
-
-      </div>
+        <Row className="m-4 px-3 text-white">
+          <h3>Popular</h3>
+        </Row>
+        <div className="mx-5">
+          {artistTopTracks.slice(0, toggleMore).map((track) => (
+            <TrackList
+              number={artistTopTracks.indexOf(track) + 1}
+              key={track.id}
+              title={track.name}
+              artist={track.artists[0].name}
+              duration={track.duration_ms}
+              albumImg={track.album.images[2].url}
+              albumName={track.album.name}
+              isArtistPage={true}
+            />
+          ))}
+        </div>
+        <Row className="mx-5 my-4 px-3 light-white">
+          {toggleMore === 5 ? (
+            <h6 className="cursor" onClick={() => setToggleMore(10)}>
+              SEE MORE
+            </h6>
+          ) : (
+            <h6 className="cursor" onClick={() => setToggleMore(5)}>
+              SEE LESS
+            </h6>
+          )}
+        </Row>
+        <Row className="m-4 px-3 text-white">
+          <h3>Albums</h3>
+        </Row>
+        <Row noGutters className="listofcards m-4 px-2">
+          {artistAlbums.map((element) => (
+            <LargeSingleMusicCard
+              img={element.images[1].url}
+              title={element.name}
+              artist={element.release_date}
+              albumId={element.id}
+              artistId={element.artists[0].id}
+              isNotMain={true}
+            />
+          ))}
+        </Row>
+        <Row className="m-4 px-3 text-white">
+          <h3>Fans also like</h3>
+        </Row>
+        <Row noGutters className="listofcards m-4 px-2">
+          {artistList &&
+            artistList.map((element) => (
+              <ArtistCard key={element.id} artist={element} />
+            ))}
+        </Row>
       </div>
     </>
   );

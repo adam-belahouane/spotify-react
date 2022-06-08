@@ -5,6 +5,7 @@ import LargeSingleMusicCard from "./LargeSingleMusicCard";
 import MyNavBar from "./MyNavBar";
 import TrackList from "./TrackList";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const AlbumPage = () => {
   const params = useParams();
@@ -73,7 +74,7 @@ const AlbumPage = () => {
             </Row>
             <Row>
               <small style={{ fontSize: 15 }}>
-                <strong>{album.artists[0].name} •</strong>{" "}
+              <Link className="text-white" to={"/artist/" + album.artists[0].id}><strong>{album.artists[0].name} •</strong></Link>{" "}
                 <span className="year">{album.release_date.slice(0, 4)}</span> •{" "}
                 {trackList.length} songs, 1 hr 19mins
               </small>
@@ -160,7 +161,7 @@ const AlbumPage = () => {
                 artist={element.release_date}
                 albumId={element.id}
                 artistId={element.artists[0].id}
-                isPlayList={false}
+                isNotMain={true}
               />
             ))}
           </Row>
