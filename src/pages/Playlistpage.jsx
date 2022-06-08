@@ -49,9 +49,11 @@ const Playlistpage = () => {
             <span className="album-name-text"> {playlist.name}</span>
           </Row>
           <Row>
+            <div className="text-muted my-1">{playlist.description}</div>
+          </Row>
+          <Row>
             <small style={{ fontSize: 15 }}>
-              <strong>{} •</strong> <span className="year">{}</span> • {} songs,
-              1 hr 19mins
+              <strong>{playlist.owner.display_name} •</strong> <span className="year">{playlist.followers.total} likes</span> <strong>•</strong> {playlist.tracks.total} songs
             </small>
           </Row>
         </Col>
@@ -63,7 +65,7 @@ const Playlistpage = () => {
             width="50"
             height="50"
             fill="currentColor"
-            class="bi bi-play-circle-fill green-play-btn"
+            className="bi bi-play-circle-fill green-play-btn"
             viewBox="0 0 16 16"
           >
             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z" />
