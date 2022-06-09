@@ -1,12 +1,28 @@
 import { Col, Row } from "react-bootstrap";
 import dateDiff from "../tools/dateFunction";
+import { durationCalculator } from "../tools/duration";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentSongAction, playPause } from "../redux/actions";
 
 const TrackList = (props) => {
-  const durationCalculator = (durationInMilliseconds) => {
-    let duration = durationInMilliseconds;
-    let mins = Math.floor(duration / 60000);
-    let secs = ((duration % 60000) / 1000).toFixed(0);
-    return mins + ":" + (secs < 10 ? "0" : "") + secs;
+  const media = useSelector((state) => state.media);
+  const dispatch = useDispatch();
+  const [previewAvailable, setPreviewAvailable] = useState(true);
+  const [show, setShow] = useState(false);
+
+  const playHandler = () => {
+    if (!props.track.preview_url) {
+      console.log("hello");
+      setPreviewAvailable(false);
+      setShow(true);
+    } else {
+      console.log("hello");
+      dispatch(setCurrentSongAction({ ...props.track }))
+      if (!media.play) {
+        dispatch(playPause())
+      }
+    }
   };
   if (props.isPlayList) {
     return (
@@ -20,6 +36,7 @@ const TrackList = (props) => {
             width="20"
             height="20"
             fill="currentColor"
+            onClick={playHandler}
             className="bi bi-play-fill d-none"
             viewBox="0 0 15 15"
           >
@@ -94,6 +111,7 @@ const TrackList = (props) => {
           xmlns="http://www.w3.org/2000/svg"
           width="20"
           height="20"
+          onClick={playHandler}
           fill="currentColor"
           className="bi bi-play-fill d-none"
           viewBox="0 0 15 15"

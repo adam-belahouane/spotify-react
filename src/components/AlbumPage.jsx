@@ -148,6 +148,7 @@ const AlbumPage = () => {
               title={track.name}
               artist={track.artists[0].name}
               duration={track.duration_ms}
+              track={track}
             />
           ))}
         </div>

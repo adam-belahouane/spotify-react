@@ -5,16 +5,36 @@ import { Col } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState, createRef } from "react";
 import { formatTime, durationCalculator } from "../../tools/duration";
+import { playPause } from "../../redux/actions";
 
 const MusicPlayer = () => {
   const media = useSelector((state) => state.media);
   const [currentTime, setCurrentTime] = useState(0);
-  const playPause = useDispatch()
+  const [volume, setVolume] = useState(10);
+  const dispatch = useDispatch();
 
   const audioRef = createRef();
 
   useEffect(() => {
-    console.log(media);
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    media.play ? audio.play() : audio.pause();
+  }, [media.selectedSong, media.play]);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    audio.volume = volume / 100;
+  }, [volume]);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    audio.addEventListener("timeupdate", (event) => {
+      setCurrentTime(event.currentTarget.currentTime);
+    });
+    // audio.addEventListener("ended", (event) => {
+    //   nextSong();
+    // });
   }, []);
 
   return (
@@ -104,6 +124,7 @@ const MusicPlayer = () => {
                 xmlns="http://www.w3.org/2000/svg"
                 width="25"
                 height="25"
+                onClick={() => dispatch(playPause())}
                 fill="currentColor"
                 class="bi bi-play-circle-fill"
                 viewBox="0 0 16 16"
@@ -114,16 +135,15 @@ const MusicPlayer = () => {
 
             {media.play && (
               <svg
-                id="pause"
-                // onClick={() => playPause()}
-                role="img"
-                height="16"
-                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+                width="25"
+                height="25"
+                onClick={() => dispatch(playPause())}
+                fill="currentColor"
+                class="bi bi-pause-circle-fill"
                 viewBox="0 0 16 16"
-                className="Svg-sc__sc-1bi12j5-0 hPiOwj"
               >
-                <path fill="none" d="M0 0h16v16H0z"></path>
-                <path d="M3 2h3v12H3zm7 0h3v12h-3z"></path>
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.25 5C5.56 5 5 5.56 5 6.25v3.5a1.25 1.25 0 1 0 2.5 0v-3.5C7.5 5.56 6.94 5 6.25 5zm3.5 0c-.69 0-1.25.56-1.25 1.25v3.5a1.25 1.25 0 1 0 2.5 0v-3.5C11 5.56 10.44 5 9.75 5z" />
               </svg>
             )}
           </div>
@@ -198,8 +218,8 @@ const MusicPlayer = () => {
           </svg>
         </div>
         <input
-          // value={volume}
-          // onChange={(e) => setVolume(e.target.value)}
+          value={volume}
+          onChange={(e) => setVolume(e.target.value)}
           className="volume-slider"
           type="range"
           style={{ height: "2px", backgroundColor: "#198754" }}

@@ -7,7 +7,7 @@ export const setAccessTokenAction = (data) => ({
   payload: data,
 });
 
-export const setCurrentSong = (track) => ({
+export const setCurrentSongAction = (track) => ({
   type: SET_CURRENT_SONG,
   payload: track,
 });
