@@ -4,14 +4,21 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { loginReducer } from "../reducers/login";
 import { encryptTransform } from "redux-persist-transform-encrypt";
+import initialSong from "./initialSong.json"
+import { mediaReducer } from "../reducers/media";
 
 const aComposeThatAlwaysWorks =
   window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export const initialState = {
   login: {
-      accesstoken: ""
-  }
+    accesstoken: "",
+  },
+  media: {
+    selectedSong: initialSong,
+    queue: [],
+    play: false,
+  },
 };
 
 const persistConfig = {
@@ -26,6 +33,7 @@ const persistConfig = {
 
 const mainReducer = combineReducers({
   login: loginReducer,
+  media: mediaReducer
 });
 
 const persistedMainReducer = persistReducer(persistConfig, mainReducer);
