@@ -77,7 +77,7 @@ const SearchPage = () => {
   }, [query]);
 
   return (
-    <div className="con px-4">
+    <div className="playlist-container-page px-4">
       <div id="search-bar-parent">
         <input
           id="search-bar"

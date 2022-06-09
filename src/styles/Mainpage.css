@@ -139,3 +139,18 @@ p {
 .cursor:hover{
   color: white;
 }
+
+.tracklist-item:hover{
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 5px;
+}
+
+.tracklist-item:hover > div > .tracklist-number-container {
+  display: none;
+}
+
+.tracklist-item:hover > div > svg {
+  width: 30px;
+  display: flex !important;
+  padding-right: 15px;
+}
