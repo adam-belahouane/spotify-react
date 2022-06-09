@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { Row, Col } from "react-bootstrap";
 import ArtistCard from "./ArtistCard";
 import LargeSingleMusicCard from "./LargeSingleMusicCard";
+import { BeatLoader } from "react-spinners";
 
 const ArtistPage = () => {
   const params = useParams();
@@ -89,9 +90,9 @@ const ArtistPage = () => {
   }, [params.artistId]);
   if (artist.length < 1) {
     return (
-      <div className="con">
-        <h1>Loading</h1>
-      </div>
+    <div className="con d-flex justify-content-center align-items-center">
+      <BeatLoader color="gray" loading={true} size={40}/>
+    </div>
     );
   }
   return (

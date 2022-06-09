@@ -64,7 +64,7 @@ const App = () => {
           <Route path="/album/:albumId" element={<AlbumPage/>} />
           <Route path="/artist/:artistId" element={<ArtistPage/>} />
           <Route path="/playlist/:playlistId" element={<Playlistpage/>} />
-          <Route path="/search/:query" render={(props) => (<SearchPage setTrackId={setTrackId} setAudio={setAudio} {...props}/>)} />
+          <Route path="/search" element={<SearchPage setTrackId={setTrackId} setAudio={setAudio}/>} />
         </Routes>
         <MusicPlayer id={trackId} srcaudio={audio} />
      

@@ -6,6 +6,7 @@ import MyNavBar from "./MyNavBar";
 import TrackList from "./TrackList";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import BeatLoader from "react-spinners/BeatLoader"
 
 const AlbumPage = () => {
   const params = useParams();
@@ -56,7 +57,9 @@ const AlbumPage = () => {
   }, [params.albumId]);
 
   if (album.length < 1) {
-    return <></>;
+    return  <div className="con d-flex justify-content-center align-items-center">
+    <BeatLoader color="gray" loading={true} size={40}/>
+  </div>;
   }
   {
     return (

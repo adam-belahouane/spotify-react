@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import TrackList from "../components/TrackList";
+import BeatLoader from "react-spinners/BeatLoader";
 
 const Playlistpage = () => {
   const params = useParams();
@@ -33,7 +34,11 @@ const Playlistpage = () => {
     fetchPlaylist(params.playlistId);
   }, []);
   if (playlist.length < 1) {
-    return <></>;
+    return (
+      <div className="playlist-container-page d-flex justify-content-center align-items-center">
+        <BeatLoader color="gray" loading={true} size={40} />
+      </div>
+    );
   }
   return (
     <div className="playlist-container-page">
@@ -53,7 +58,9 @@ const Playlistpage = () => {
           </Row>
           <Row>
             <small style={{ fontSize: 15 }}>
-              <strong>{playlist.owner.display_name} •</strong> <span className="year">{playlist.followers.total} likes</span> <strong>•</strong> {playlist.tracks.total} songs
+              <strong>{playlist.owner.display_name} •</strong>{" "}
+              <span className="year">{playlist.followers.total} likes</span>{" "}
+              <strong>•</strong> {playlist.tracks.total} songs
             </small>
           </Row>
         </Col>
