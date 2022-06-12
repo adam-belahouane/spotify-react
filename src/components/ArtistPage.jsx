@@ -161,6 +161,7 @@ const ArtistPage = () => {
               duration={track.duration_ms}
               albumImg={track.album.images[2].url}
               albumName={track.album.name}
+              track={track}
               isArtistPage={true}
             />
           ))}

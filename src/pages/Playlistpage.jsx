@@ -134,6 +134,7 @@ const Playlistpage = () => {
             albumImg={track.track.album.images[2].url}
             albumName={track.track.album.name}
             dateAdded={track.added_at}
+            track={track}
             isPlayList={true}
           />
         ))}
