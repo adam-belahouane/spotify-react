@@ -1,0 +1,40 @@
+.sidebarcon {
+  position: absolute;
+  width: 17vw;
+  height: 90vh;
+  background-color: black;
+  padding: 0 24px;
+  padding-top: 24px;
+}
+
+.sidehr {
+  border-top: 1px solid rgba(179, 179, 179, 0.2);
+}
+
+.spotify-logo {
+  width: 130px;
+  margin-bottom: 2vh;
+}
+
+.sidebar-text {
+  font-weight: 700;
+  font-size: 14px;
+  margin: 0;
+  text-align: center;
+  margin-left: 15px;
+}
+
+.sidebar-link-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  height: 40px;
+  color: #b3b3b3 !important;
+}
+
+.selected-link {
+  color: white !important;
+}
+
+

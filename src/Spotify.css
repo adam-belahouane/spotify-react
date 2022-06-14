@@ -1,11 +1,4 @@
-body {
-    background: rgb(105, 9, 9);
-    background: linear-gradient(
-      180deg,
-      rgba(105, 9, 9, 0.9304096638655462) 9%,
-      rgba(0, 0, 0, 1) 37%
-    );
-  }
+
  
   .btn {
     height: auto;
@@ -37,6 +30,11 @@ body {
     padding: 0 !important;
   }
   .con {
+    background: linear-gradient(
+      180deg,
+      rgba(105, 9, 9, 0.9304096638655462) 9%,
+      rgba(18, 18, 18, 1) 37%
+    );
     position: relative;
     left: 17vw;
     width: 83vw;
@@ -67,9 +65,7 @@ body {
     border: 1px;
     border-radius: 5px;
   }
-  .card-text {
-    color: rgb(255, 255, 255, 0.4);
-  }
+  
   /* music player css */
   
   .music-player{
@@ -139,53 +135,12 @@ body {
   }
   /* music player end */
   
-  .sidebarcon{
-    position: absolute;
-    top: 0;
-    width: 17vw;
-    height: 90vh;
-    overflow: hidden;
-    background-color: black;
-    padding-left: 2vw;
-    padding-right: 1vw;
-    padding-top: 2vh;
-  }
   
   
   .line {
     border-bottom: 0.5px solid grey;
   }
   
-  #sideBar {
-    height: 20px;
-    margin-bottom: 0%;
-    color: grey;
-    font-weight: bold;
-  }
-  
-  .sideImg {
-    vertical-align: 50%;
-  }
-  
-  #sidebarBody {
-    padding: 0%;
-  }
-  
-  .sidebar-ul {
-    height: 400px;
-    width: 411px;
-    overflow: auto;
-    list-style-type: none;
-    font-size: 10px;
-    color: grey;
-    padding: 0%;
-    font-weight: 280;
-    position: relative;
-  }
-  
-  li {
-    margin-top: 10px;
-  }
   
   /* width */
   ::-webkit-scrollbar {
@@ -427,11 +382,7 @@ body {
       text-decoration: none;
     }
 
-    .singlecardtext {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
+    
 
     .listofcards {
       flex-wrap: nowrap !important;

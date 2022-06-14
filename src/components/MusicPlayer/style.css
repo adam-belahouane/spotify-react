@@ -1,9 +1,7 @@
-.main-slider{
-    height: 4px;
-    width: 50vw !important;
-    
+.music-player-con {
+  background-color: rgba(0, 0, 0, 0.9);
+  width: 100vw;
+  height: 10vh;
+  border-top: 1px solid #282828;
 }
 
-.volume-slider{
-    height: 4px;
-}

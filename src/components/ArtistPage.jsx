@@ -1,190 +1,132 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import TrackList from "./TrackList";
+import { useSelector } from "react-redux";
+import { Row, Col } from "react-bootstrap";
+import ArtistCard from "./ArtistCard";
+import LargeSingleMusicCard from "./LargeSingleMusicCard";
+import { BeatLoader } from "react-spinners";
 
 const ArtistPage = () => {
-  const params = useParams()
+  const params = useParams();
+  const token = useSelector((state) => state.login.accesstoken);
+  const ApiUrl = process.env.REACT_APP_API_URL;
+  const [artist, setArtist] = useState([]);
+  const [artistTopTracks, setArtistTopTracks] = useState([]);
+  const [artistList, setArtistList] = useState([]);
+  const [artistAlbums, setArtistAlbums] = useState([]);
+  const [toggleMore, setToggleMore] = useState(5);
 
-  const fetchArtist = async(id) => {
+  const fetchArtist = async (id) => {
     try {
-      let response = await fetch(`https://striveschool-api.herokuapp.com/api/deezer/artist/${id}`)
-      if(response.ok) {
-        let data = await response.json()
-        console.log(data)
+      const res = await fetch(`${ApiUrl}artists/${id}`, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+      if (res.ok) {
+        const json = await res.json();
+        setArtist(json);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
+  };
 
+  const fetchArtistTopTracks = async (id) => {
+    try {
+      const res = await fetch(`${ApiUrl}artists/${id}/top-tracks?country=GB`, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+      if (res.ok) {
+        const json = await res.json();
+        setArtistTopTracks(json.tracks);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  const fetchRelatedArtist = async (id) => {
+    try {
+      const res = await fetch(`${ApiUrl}artists/${id}/related-artists`, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+      if (res.ok) {
+        const json = await res.json();
+        setArtistList(json.artists);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchArtistAlbums = async (id) => {
+    try {
+      const res = await fetch(`${ApiUrl}artists/${id}/albums`, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+      if (res.ok) {
+        const json = await res.json();
+        console.log(json);
+        setArtistAlbums(json.items);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchArtist(params.artistId);
+    fetchArtistTopTracks(params.artistId);
+    fetchRelatedArtist(params.artistId);
+    fetchArtistAlbums(params.artistId);
+  }, [params.artistId]);
+  if (artist.length < 1) {
+    return (
+    <div className="con d-flex justify-content-center align-items-center">
+      <BeatLoader color="gray" loading={true} size={40}/>
+    </div>
+    );
   }
-
-  useEffect(()=> {
-    fetchArtist(params.artistId)
-  }, [])
   return (
     <>
-      ;
       <div className="con">
-        <div className="row" style={{ position: "relative" }}>
-          <a href="homepage.html">
-            {" "}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width={16}
-              height={16}
-              fill="currentColor"
-              className="bi bi-chevron-left"
-              viewBox="0 0 16 16"
-              id="arrow-left"
-            >
-              <path
-                fillRule="evenodd"
-                d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"
-              />
-            </svg>
-          </a>
-          <a href="Album page.html">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width={16}
-              height={16}
-              fill="currentColor"
-              className="bi bi-chevron-right"
-              viewBox="0 0 16 16"
-              id="arrow-right"
-            >
-              <path
-                fillRule="evenodd"
-                d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
-              />
-            </svg>
-          </a>
-          <div
-            className="container-fluid"
-            style={{ padding: "0%", height: 330 }}
-          >
-            <img
-              src="queen-cover.png"
-              className="img-fluid"
-              alt="..."
-              id="queen-cover"
-            />
-            <div className="card mb-3" id="verified">
-              <div
-                className="row no-gutters"
-                style={{ alignItems: "baseline" }}
-              >
-                <div className="col-1">
-                  <img
-                    src="Schermata 2021-09-07 alle 00.28.12.png"
-                    alt="verified"
-                    style={{ width: 15, height: 15 }}
-                  />
-                  <path
-                    fillRule="evenodd"
-                    d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"
-                  ></path>
-                </div>
-                <div className="col-10">
-                  <div className="card-body" id="sidebarBody">
-                    <p className="card-title" style={{ padding: "0%" }}>
-                      Verified Artist
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <h1 id="queen">Queen</h1>
-            <p id="queenListeners" style={{ fontSize: 10 }}>
-              37,120,733 monthly listeners
-            </p>
-          </div>
-          <div
-            className="dropdown d-flex justify-content-end"
-            style={{ marginTop: 10 }}
-          >
-            <button
-              className="btn btn-dark  badge-pill dropdown-toggle"
-              type="button"
-              id="dropdownMenu2"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              <img
-                id="profilePic"
-                src="./assets/pngfind.com-placeholder-png-6104451.png"
-              />
-              Username
-            </button>
-            <div
-              className="dropdown-menu bg-dark"
-              aria-labelledby="dropdownMenu2"
-            >
-              <button
-                className="dropdown-item topdropdwon text-white"
-                type="button"
-              >
-                Account
-              </button>
-              <button
-                className="dropdown-item topdropdwon text-white"
-                type="button"
-              >
-                Profile
-              </button>
-              <button
-                onclick="location.href='https://www.spotify.com/us/premium/'"
-                className="dropdown-item topdropdwon text-white"
-                type="button"
-              >
-                Upgrade to Permium
-              </button>
-              <button
-                className="dropdown-item topdropdwon text-white"
-                type="button"
-              >
-                Settings
-              </button>
-              <div className="dropdown-divider" />
-              <button
-                onclick="location.href='https://support.spotify.com/us/article/updating-spotify/'"
-                className="dropdown-item topdropdwon text-white"
-                type="button"
-              >
-                Update Spotify now
-              </button>
-              <button
-                onclick="location.href='profile.html'"
-                className="dropdown-item  topdropdwon text-white"
-                type="button"
-              >
-                Log out
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="row gradBg">
+        <Row className="text-white my-5 mx-4 px-1">
+          <Col md={3}>
+            <img src={artist.images[0].url} className="img-fluid" />
+          </Col>
+          <Col className="album-info" md={9}>
+            <Row>
+              <div className="text-muted my-1">Verified Artist</div>
+            </Row>
+            <Row>
+              <span className="album-name-text"> {artist.name}</span>
+            </Row>
+            <Row>
+              <small style={{ fontSize: 15 }}>{artist.followers.total}</small>
+            </Row>
+          </Col>
+        </Row>
+        <div className="row mx-4">
           <div className="col-12 col-md-8">
             <div className="row">
-              <div id="pause">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width={45}
-                  height={45}
-                  fill="currentColor"
-                  className="bi bi-pause-circle-fill"
-                  viewBox="0 0 16 16"
-                  style={{
-                    color: "#1ed760",
-                    backgroundColor: "white",
-                    borderRadius: 26,
-                    borderColor: "rgb(64, 197, 64)",
-                  }}
-                >
-                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.25 5C5.56 5 5 5.56 5 6.25v3.5a1.25 1.25 0 1 0 2.5 0v-3.5C7.5 5.56 6.94 5 6.25 5zm3.5 0c-.69 0-1.25.56-1.25 1.25v3.5a1.25 1.25 0 1 0 2.5 0v-3.5C11 5.56 10.44 5 9.75 5z" />
-                </svg>
-              </div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="50"
+                height="50"
+                fill="currentColor"
+                className="bi bi-play-circle-fill green-play-btn"
+                viewBox="0 0 16 16"
+              >
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z" />
+              </svg>
               <div id="follow">
                 <p style={{ position: "absolute", top: "20%", left: "15%" }}>
                   follow
@@ -204,177 +146,61 @@ const ArtistPage = () => {
                 </svg>
               </div>
             </div>
-            <h4>Popular</h4>
-            <table className="table table-borderless">
-              <tbody>
-                <tr>
-                  <th scope="row">
-                    <div className="card mb-3">
-                      <div className="row no-gutters alignedCards">
-                        <div className="col-2 songImg">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width={13}
-                            height={13}
-                            fill="rgb(64, 197, 64)"
-                            className="bi bi-reception-3"
-                            viewBox="0 0 16 16"
-                            style={{ display: "-ms-inline-flexbox" }}
-                          >
-                            <path d="M0 11.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2zm4-3a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-5zm4-3a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-8zm4 8a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z" />
-                          </svg>
-                          <img
-                            src="another.jpeg"
-                            alt="..."
-                            style={{ width: 35, height: 35, marginLeft: 4 }}
-                          />
-                        </div>
-                        <div className="col-10">
-                          <div className="card-body">
-                            <p
-                              className="card-title"
-                              style={{ color: "#1ed760" }}
-                            >
-                              Another One Bites The Dust - Remastered 2011
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </th>
-                  <td>1,013,328,772</td>
-                  <td>3:34</td>
-                </tr>
-                <tr>
-                  <th scope="row">
-                    <div className="card mb-3">
-                      <div className="row no-gutters alignedCards">
-                        <div className="col-2 songImg">
-                          2{" "}
-                          <img src="img/bohemian.jpeg" alt="..." id="cardImg" />
-                        </div>
-                        <div className="col-10">
-                          <div className="card-body">
-                            <p className="card-title">
-                              Bohemian Rhapsody - Remastered 2011
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </th>
-                  <td>1,497,986,258</td>
-                  <td>5:54</td>
-                </tr>
-                <tr>
-                  <th scope="row">
-                    <div className="card mb-3">
-                      <div className="row no-gutters alignedCards">
-                        <div className="col-2 songImg">
-                          3{" "}
-                          <img
-                            src="img/don'tstopmenow.jpg"
-                            alt="..."
-                            id="cardImg"
-                          />
-                        </div>
-                        <div className="col-10">
-                          <div className="card-body">
-                            <p className="card-title">
-                              Don't Stop Me Now - Remastered 2011
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </th>
-                  <td>1,063,959,983</td>
-                  <td>3:29</td>
-                </tr>
-                <tr>
-                  <th scope="row">
-                    <div className="card mb-3">
-                      <div className="row no-gutters alignedCards">
-                        <div className="col-2 songImg">
-                          4{" "}
-                          <img
-                            src="img/underpressure.png"
-                            alt="..."
-                            id="cardImg"
-                          />
-                        </div>
-                        <div className="col-10">
-                          <div className="card-body">
-                            <p className="card-title">
-                              Under Pressure - Remastered 2011
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </th>
-                  <td>900,225,096</td>
-                  <td>4:08</td>
-                </tr>
-                <tr>
-                  <th scope="row">
-                    <div className="card mb-3">
-                      <div className="row no-gutters alignedCards">
-                        <div className="col-2 songImg">
-                          5{" "}
-                          <img
-                            src="img/wewillrockyou.jpeg"
-                            id="cardImg"
-                            alt="..."
-                          />
-                        </div>
-                        <div className="col-10">
-                          <div className="card-body">
-                            <p className="card-title">
-                              We Will Rock You - Remastered
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </th>
-                  <td>705,225,721</td>
-                  <td>2:02</td>
-                </tr>
-              </tbody>
-            </table>
-            <p className="seeMore">see more</p>
-          </div>
-          <div className="col-12 col-md-4">
-            <div className="row" style={{ height: 85 }} />
-            <h4>Artist pick</h4>
-            <div className="card mb-3" style={{ maxWidth: 200 }}>
-              <div className="row no-gutters alignedCards">
-                <div className="col-4">
-                  <img
-                    src="img/artistpick.jpg"
-                    alt="..."
-                    style={{ width: 40, height: 40 }}
-                  />
-                </div>
-                <div className="col-8" style={{ position: "relative" }}>
-                  <div className="card-body">
-                    <p style={{ fontSize: 10, position: "absolute", top: 5 }}>
-                      Posted by Queen
-                    </p>
-                    <p
-                      className="card-title"
-                      style={{ fontSize: 10, fontWeight: "bold" }}
-                    >
-                      Queen Best of
-                    </p>
-                    <p style={{ fontSize: 10 }}>Playlist</p>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
+        <Row className="m-4 px-3 text-white">
+          <h3>Popular</h3>
+        </Row>
+        <div className="mx-5">
+          {artistTopTracks.slice(0, toggleMore).map((track) => (
+            <TrackList
+              number={artistTopTracks.indexOf(track) + 1}
+              key={track.id}
+              title={track.name}
+              artist={track.artists[0].name}
+              duration={track.duration_ms}
+              albumImg={track.album.images[2].url}
+              albumName={track.album.name}
+              track={track}
+              isArtistPage={true}
+            />
+          ))}
+        </div>
+        <Row className="mx-5 my-4 px-3 light-white">
+          {toggleMore === 5 ? (
+            <h6 className="cursor" onClick={() => setToggleMore(10)}>
+              SEE MORE
+            </h6>
+          ) : (
+            <h6 className="cursor" onClick={() => setToggleMore(5)}>
+              SEE LESS
+            </h6>
+          )}
+        </Row>
+        <Row className="m-4 px-3 text-white">
+          <h3>Albums</h3>
+        </Row>
+        <Row noGutters className="listofcards m-4 px-2">
+          {artistAlbums.map((element) => (
+            <LargeSingleMusicCard
+              img={element.images[1].url}
+              title={element.name}
+              artist={element.release_date}
+              albumId={element.id}
+              artistId={element.artists[0].id}
+              isNotMain={true}
+            />
+          ))}
+        </Row>
+        <Row className="m-4 px-3 text-white">
+          <h3>Fans also like</h3>
+        </Row>
+        <Row noGutters className="listofcards m-4 px-2">
+          {artistList &&
+            artistList.map((element) => (
+              <ArtistCard key={element.id} artist={element} />
+            ))}
+        </Row>
       </div>
     </>
   );

@@ -1,7 +1,7 @@
 import { Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-const LargeSingleMusicCard = ({ img, title, artist, albumId, artistId, setAudio, trackaudio, setTrackId, trackId }) => {
+const LargeSingleMusicCard = ({ img, title, artist, albumId, artistId, setAudio, trackaudio, setTrackId, trackId, isNotMain }) => {
 
   const handleClick = () => {
     setAudio(trackaudio)
@@ -16,15 +16,15 @@ const LargeSingleMusicCard = ({ img, title, artist, albumId, artistId, setAudio,
           className="img-fluid justify-self-center align-items-center px-3 py-3"
           src={img}
           alt="Card image cap"
-          onClick={() => handleClick()}
         />
         <div className="card-body">
           <Link to={"/album/" + albumId }>
           <h6 className="singlecardtext">{title}</h6>
           </Link>
+          {isNotMain?<p className="card-text">{artist.slice(0,4)}</p>:
           <Link to={"/artist/" + artistId}>
           <p className="card-text">{artist}</p>
-          </Link>
+          </Link>}
         </div>
       </div>
     </Col>

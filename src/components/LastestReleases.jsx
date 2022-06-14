@@ -3,15 +3,15 @@ import { Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import LargeSingleMusicCard from "./LargeSingleMusicCard";
 
-const ListOfMusicCards = ({name, setAudio, setTrackId}) => {
+const LastestReleases = () => {
   const [arrayofmusic, setArrayOfMusic] = useState([]);
   const token = useSelector((state) => state.login.accesstoken)
   const ApiUrl = process.env.REACT_APP_API_URL
 
   const fetchAlbums = async () => {
-    if(name === "new-releases"){
+    
     try {
-        const res = await fetch(`${ApiUrl}browse/${name}`, {
+        const res = await fetch(`${ApiUrl}browse/new-releases`, {
             headers: {
                 "Authorization": "Bearer " + token
             }
@@ -24,32 +24,20 @@ const ListOfMusicCards = ({name, setAudio, setTrackId}) => {
         }
     } catch (error) {
         console.log(error)
-    }}else{
-      try {
-        const res = await fetch(`${ApiUrl}browse/featured-playlists?country=GB`, {
-            headers: {
-                "Authorization": "Bearer " + token
-            }
-        })
-
-        if (res.ok) {
-            const json = await res.json()
-            console.log(json.playlists.items);
-            setArrayOfMusic(json.playlists.items)
-        }
-    } catch (error) {
-        console.log(error)
     }
-    }
+    
 }
 
   useEffect(() => {
     fetchAlbums();
-  }, [name]);
+  }, []);
 
   return (
     <>
     <div className="mb-3">
+      <Row className="my-4 ml-3">
+            <h3>Lastest Releases</h3>
+      </Row>
       <Row noGutters className="listofcards">
         {arrayofmusic.map((element) => (
           <LargeSingleMusicCard
@@ -66,4 +54,4 @@ const ListOfMusicCards = ({name, setAudio, setTrackId}) => {
   );
 };
 
-export default ListOfMusicCards;
+export default LastestReleases;
