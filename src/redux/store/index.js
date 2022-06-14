@@ -5,6 +5,7 @@ import storage from "redux-persist/lib/storage";
 import { loginReducer } from "../reducers/login";
 import { encryptTransform } from "redux-persist-transform-encrypt";
 import initialSong from "./initialSong.json"
+import initialQueue from "./initialQueue.json"
 import { mediaReducer } from "../reducers/media";
 
 const aComposeThatAlwaysWorks =
@@ -16,7 +17,7 @@ export const initialState = {
   },
   media: {
     selectedSong: initialSong,
-    queue: [],
+    queue: initialQueue,
     play: false,
   },
 };

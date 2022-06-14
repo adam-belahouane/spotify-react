@@ -15,3 +15,8 @@ export const setCurrentSongAction = (track) => ({
 export const playPause = () => ({
   type: PLAY_PAUSE,
 });
+
+export const setQueueAction = (queuedTracks) => ({
+  type: 'SET_QUEUE',
+  payload: queuedTracks
+})

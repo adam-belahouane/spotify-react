@@ -5,15 +5,76 @@ import { Col } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState, createRef } from "react";
 import { formatTime, durationCalculator } from "../../tools/duration";
-import { playPause } from "../../redux/actions";
+import { playPause, setCurrentSongAction } from "../../redux/actions";
 
 const MusicPlayer = () => {
   const media = useSelector((state) => state.media);
   const [currentTime, setCurrentTime] = useState(0);
   const [volume, setVolume] = useState(10);
+  const [show, setShow] = useState(false)
   const dispatch = useDispatch();
 
   const audioRef = createRef();
+
+  const nextSong = () => {
+    const index = media.queue.findIndex(
+      (x) =>
+        x.id === media.selectedSong.id || x.track?.id === media.selectedSong.id
+    );
+    const songToSkipTo =
+      media.queue[index === media.queue.length - 1 ? 0 : index + 1];
+
+    if (typeof songToSkipTo.track === "object") {
+      console.log("fired");
+      if (songToSkipTo.track.preview_url === null) {
+        setShow(true);
+      } else {
+        dispatch(setCurrentSongAction(songToSkipTo.track));
+
+        if (!media.play) {
+          dispatch(playPause());
+        }
+      }
+    } else {
+      if (songToSkipTo.preview_url === null) {
+        setShow(true);
+      } else {
+        dispatch(setCurrentSongAction(songToSkipTo));
+        if (!media.play) {
+          dispatch(playPause());
+        }
+      }
+    }
+  };
+
+  const prevSong = () => {
+    const index = media.queue.findIndex(
+      (x) =>
+        x.id === media.selectedSong.id || x.track?.id === media.selectedSong.id
+    );
+    const songToSkipTo =
+      media.queue[index === 0 ? media.queue.length - 1 : index - 1];
+
+    if (typeof songToSkipTo.track === "object") {
+      if (songToSkipTo.track.preview_url === null) {
+        setShow(true);
+      } else {
+        dispatch(setCurrentSongAction(songToSkipTo.track));
+        if (!media.play) {
+          dispatch(playPause());
+        }
+      }
+    } else {
+      if (songToSkipTo.preview_url === null) {
+        setShow(true);
+      } else {
+        dispatch(setCurrentSongAction(songToSkipTo));
+        if (!media.play) {
+          dispatch(playPause());
+        }
+      }
+    }
+  };
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -32,9 +93,9 @@ const MusicPlayer = () => {
     audio.addEventListener("timeupdate", (event) => {
       setCurrentTime(event.currentTarget.currentTime);
     });
-    // audio.addEventListener("ended", (event) => {
-    //   nextSong();
-    // });
+    audio.addEventListener("ended", (event) => {
+      nextSong();
+    });
   }, []);
 
   return (
@@ -103,7 +164,7 @@ const MusicPlayer = () => {
             <path d="M13 5.466V1.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192zm0 9v-3.932a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192z" />
           </svg>
           <svg
-            // onClick={prevSong}
+            onClick={prevSong}
             role="img"
             height="16"
             width="16"
@@ -149,7 +210,7 @@ const MusicPlayer = () => {
           </div>
 
           <svg
-            // onClick={nextSong}
+            onClick={nextSong}
             role="img"
             height="16"
             width="16"
