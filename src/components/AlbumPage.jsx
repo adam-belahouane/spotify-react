@@ -29,7 +29,20 @@ const AlbumPage = () => {
         const json = await res.json();
         console.log(json);
         setAlbum(json);
-        setTrackList(json.tracks.items);
+
+        const tracksWithImages = json.tracks.items.map(item => {
+          return {
+            ...item,
+            album: {
+              images: [...json.images],
+              name: json.name
+            }
+          }
+        })
+        dispatch(setQueueAction(tracksWithImages))
+        console.log(tracksWithImages);
+        setTrackList(tracksWithImages);
+        console.log(trackList);
         fetchArtistAlbums(json.artists[0].id);
       }
     } catch (error) {
@@ -58,15 +71,7 @@ const AlbumPage = () => {
     const songToPlay = trackList.find(
       (item) => item.track?.preview_url !== null
     );
-    const tracksWithImages = trackList.map(item => {
-      return {
-        ...item,
-        album: {
-          images: [...album.images]
-        }
-      }
-    })
-    dispatch(setQueueAction(tracksWithImages))
+    
 
     if (songToPlay) {
       dispatch(

@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import ArtistCard from "../components/ArtistCard";
 import LargeSingleMusicCard from "../components/LargeSingleMusicCard";
 import PlayListCard from "../components/PlayListCard";
+import LikedSongsPage from "./LikedSongsPage";
 
 const LibraryPage = () => {
   const [selected, setSelected] = useState("Playlists");
@@ -92,7 +93,7 @@ const LibraryPage = () => {
         </>
       )}
 
-      {/* {selected === "Tracks" && <LikedSongsPage />} */}
+      {selected === "Tracks" && <LikedSongsPage />}
       </div>
     </div>
   );

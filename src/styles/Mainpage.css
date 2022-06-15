@@ -180,3 +180,16 @@ p {
 .following {
   border: solid 1px white;
 }
+
+.heart-btn-tracklist-item{
+  margin-left: -40px;
+  display: none;
+}
+
+.tracklist-item:hover > div > .heart-btn-tracklist-item{
+  display: block !important;
+}
+
+.heart-selected {
+  display: block !important;
+}
