@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import TrackList from "./TrackList";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Row, Col } from "react-bootstrap";
 import ArtistCard from "./ArtistCard";
 import LargeSingleMusicCard from "./LargeSingleMusicCard";
 import { BeatLoader } from "react-spinners";
+import { setCurrentSongAction, playPause, setQueueAction } from "../redux/actions";
 
 const ArtistPage = () => {
   const params = useParams();
@@ -16,6 +17,8 @@ const ArtistPage = () => {
   const [artistList, setArtistList] = useState([]);
   const [artistAlbums, setArtistAlbums] = useState([]);
   const [toggleMore, setToggleMore] = useState(5);
+  const dispatch = useDispatch()
+  const media = useSelector((state) => state.media)
 
   const fetchArtist = async (id) => {
     try {
@@ -42,6 +45,7 @@ const ArtistPage = () => {
       });
       if (res.ok) {
         const json = await res.json();
+        console.log(json);
         setArtistTopTracks(json.tracks);
       }
     } catch (error) {
@@ -82,6 +86,24 @@ const ArtistPage = () => {
     }
   };
 
+  const playHandler = () => {
+    const songToPlay = artistTopTracks.find(
+      (item) => item.track?.preview_url !== null
+    );
+    dispatch(setQueueAction(artistTopTracks))
+
+    if (songToPlay) {
+      dispatch(
+        setCurrentSongAction({
+          ...songToPlay,
+        })
+      );
+      dispatch(playPause());
+    } else {
+      return;
+    }
+  };
+
   useEffect(() => {
     fetchArtist(params.artistId);
     fetchArtistTopTracks(params.artistId);
@@ -117,16 +139,39 @@ const ArtistPage = () => {
         <div className="row mx-4">
           <div className="col-12 col-md-8">
             <div className="row">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="50"
-                height="50"
-                fill="currentColor"
-                className="bi bi-play-circle-fill green-play-btn"
-                viewBox="0 0 16 16"
-              >
-                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z" />
-              </svg>
+            {!media.play &&<svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="50"
+              height="50"
+              onClick={() => playHandler()}
+              fill="currentColor"
+              class="bi bi-play-circle-fill green-play-btn"
+              viewBox="0 0 16 16"
+            >
+              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z" />
+            </svg>}
+            {media.play && !artistTopTracks.some(item => item.id === media.selectedSong.id) &&<svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="50"
+              height="50"
+              onClick={() => playHandler()}
+              fill="currentColor"
+              class="bi bi-play-circle-fill green-play-btn"
+              viewBox="0 0 16 16"
+            >
+              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z" />
+            </svg>}
+            {media.play && artistTopTracks.some(item => item.id === media.selectedSong.id) &&<svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="50"
+              height="50"
+              onClick={() => playHandler()}
+              fill="currentColor"
+              class="bi bi-pause-circle-fill green-play-btn"
+              viewBox="0 0 16 16"
+            >
+              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.25 5C5.56 5 5 5.56 5 6.25v3.5a1.25 1.25 0 1 0 2.5 0v-3.5C7.5 5.56 6.94 5 6.25 5zm3.5 0c-.69 0-1.25.56-1.25 1.25v3.5a1.25 1.25 0 1 0 2.5 0v-3.5C11 5.56 10.44 5 9.75 5z" />
+            </svg>}
               <div id="follow">
                 <p style={{ position: "absolute", top: "20%", left: "15%" }}>
                   follow

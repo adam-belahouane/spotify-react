@@ -58,7 +58,15 @@ const AlbumPage = () => {
     const songToPlay = trackList.find(
       (item) => item.track?.preview_url !== null
     );
-    dispatch(setQueueAction(trackList))
+    const tracksWithImages = trackList.map(item => {
+      return {
+        ...item,
+        album: {
+          images: [...album.images]
+        }
+      }
+    })
+    dispatch(setQueueAction(tracksWithImages))
 
     if (songToPlay) {
       dispatch(
