@@ -193,3 +193,7 @@ p {
 .heart-selected {
   display: block !important;
 }
+
+.track-playing {
+  color:rgb(30, 215, 96);
+}

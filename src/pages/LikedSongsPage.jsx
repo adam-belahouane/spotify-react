@@ -11,7 +11,10 @@ const LikedSongsPage = () => {
         const songToPlay = favourites.tracks.find(item => item.preview_url !== null)
         if (songToPlay) {
             dispatch(setCurrentSongAction(songToPlay))
-            dispatch(playPause())
+            if(!media.play){
+
+              dispatch(playPause())
+            }
         } else {
             return
         }
@@ -72,7 +75,7 @@ const LikedSongsPage = () => {
                 xmlns="http://www.w3.org/2000/svg"
                 width="60"
                 height="60"
-                onClick={() => playHandler()}
+                onClick={() => dispatch(playPause())}
                 fill="currentColor"
                 class="bi bi-pause-circle-fill green-play-btn"
                 viewBox="0 0 16 16"
