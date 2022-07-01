@@ -18,3 +18,22 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+.selected {
+  background-color: #333;
+  border-radius: 5px;
+  color: white !important;
+  font-weight: 1100;
+  font-size: 16px !important
+}
+
+.library-links {
+  text-decoration: none;
+  color: white;
+  font-weight: 700;
+}
+
+.library-links:hover {
+  cursor: pointer;
+  color: white;
+}

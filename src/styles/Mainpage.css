@@ -154,3 +154,46 @@ p {
   display: flex !important;
   padding-right: 15px;
 }
+
+.follow-btn-con {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.follow-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 7px 15px;
+  border: solid 1px rgb(179, 179, 179, 0.5);
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.follow-btn:hover {
+  border: solid 1px white;
+}
+
+.following {
+  border: solid 1px white;
+}
+
+.heart-btn-tracklist-item{
+  margin-left: -40px;
+  display: none;
+}
+
+.tracklist-item:hover > div > .heart-btn-tracklist-item{
+  display: block !important;
+}
+
+.heart-selected {
+  display: block !important;
+}
+
+.track-playing {
+  color:rgb(30, 215, 96);
+}

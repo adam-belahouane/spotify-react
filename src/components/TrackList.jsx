@@ -3,15 +3,14 @@ import dateDiff from "../tools/dateFunction";
 import { durationCalculator } from "../tools/duration";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentSongAction, playPause } from "../redux/actions";
+import { setCurrentSongAction, playPause, removeTrackFromFavouritesAction, addTrackToFavouritesAction } from "../redux/actions";
 import { useEffect } from "react";
 
 const TrackList = (props) => {
-  const media = useSelector((state) => state.media);
+  const { media, favourites } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [previewAvailable, setPreviewAvailable] = useState(true);
   const [show, setShow] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
 
   const playHandler = () => {
     if (props.isPlayList) {
@@ -94,7 +93,7 @@ const TrackList = (props) => {
             />
           </div>
           <div className="tracklist-name-artist">
-            <div className="tracklist-name">{props.title}</div>
+          {media.play && media.selectedSong.id === props.track.track.id ?<div className="tracklist-name  track-playing">{props.title}</div>:<div className="tracklist-name">{props.title}</div>}
             <div className="tracklist-artist">{props.artist}</div>
           </div>
         </Col>
@@ -104,7 +103,42 @@ const TrackList = (props) => {
         <Col md={3} className="text-muted">
           {dateDiff(props.dateAdded)}
         </Col>
-        <Col md={1}>{durationCalculator(props.duration)}</Col>
+        <Col md={1} className="d-flex flex-row">
+        {favourites.tracks.find((item) => item.id === props.key) ? (
+          <div className="heart-btn-tracklist-item heart-selected">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            fill="#1ed760"
+            class="bi bi-heart-fill heart-btn"
+            viewBox="0 0 16 16"
+            onClick={() =>
+              dispatch(removeTrackFromFavouritesAction(props.track.track))
+            }
+          >
+            <path
+              fill-rule="evenodd"
+              d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
+            />
+          </svg>
+          </div>
+        ) : (
+          <div className="heart-btn-tracklist-item">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              fill="currentColor"
+              className="bi bi-heart heart-btn"
+              viewBox="0 0 16 16"
+              onClick={() => dispatch(addTrackToFavouritesAction({...props.track.track, added_at: new Date()}))}
+            >
+              <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
+            </svg>
+          </div>
+        )}
+          {durationCalculator(props.duration)}</Col>
       </Row>
     );
   }
@@ -147,14 +181,49 @@ const TrackList = (props) => {
               className="tracklist-img"
             />
           </div>
-          <div className="tracklist-name-artist">
-            <div className="tracklist-name text-white">{props.title}</div>
+          <div className="tracklist-name-artist light-white">
+            
+          {media.play && media.selectedSong.id === props.track.id ?<div className="tracklist-name  track-playing">{props.title}</div>:<div className="tracklist-name">{props.title}</div>}
           </div>
         </Col>
         <Col md={5} className="tracklist-album-name light-white">
           {props.albumName}
         </Col>
-        <Col md={2} className="light-white">
+        <Col md={2} className="light-white d-flex flex-row">
+        {favourites.tracks.find((item) => item.id === props.track.id) ? (
+          <div className="heart-btn-tracklist-item heart-selected">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            fill="#1ed760"
+            class="bi bi-heart-fill heart-btn"
+            viewBox="0 0 16 16"
+            onClick={() =>
+              dispatch(removeTrackFromFavouritesAction(props.track))
+            }
+          >
+            <path
+              fill-rule="evenodd"
+              d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
+            />
+          </svg>
+          </div>
+        ) : (
+          <div className="heart-btn-tracklist-item">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              fill="currentColor"
+              className="bi bi-heart heart-btn"
+              viewBox="0 0 16 16"
+              onClick={() => dispatch(addTrackToFavouritesAction({...props.track, added_at: new Date()}))}
+            >
+              <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
+            </svg>
+          </div>
+        )}
           {durationCalculator(props.duration)}
         </Col>
       </Row>
@@ -192,11 +261,47 @@ const TrackList = (props) => {
           </svg>
         )}
         <div className="tracklist-name-artist">
-          <div className="tracklist-name">{props.title}</div>
+        {media.play && media.selectedSong.id === props.track.id ?<div className="tracklist-name  track-playing">{props.title}</div>:<div className="tracklist-name">{props.title}</div>}
           <div className="tracklist-artist">{props.artist}</div>
         </div>
       </Col>
-      <Col md={1}>{durationCalculator(props.duration)}</Col>
+      <Col md={1} className="d-flex flex-row">
+        {favourites.tracks.find((item) => item.id === props.track.id) ? (
+          <div className="heart-btn-tracklist-item heart-selected">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            fill="#1ed760"
+            class="bi bi-heart-fill heart-btn"
+            viewBox="0 0 16 16"
+            onClick={() =>
+              dispatch(removeTrackFromFavouritesAction(props.track))
+            }
+          >
+            <path
+              fill-rule="evenodd"
+              d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
+            />
+          </svg>
+          </div>
+        ) : (
+          <div className="heart-btn-tracklist-item">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              fill="currentColor"
+              className="bi bi-heart heart-btn"
+              viewBox="0 0 16 16"
+              onClick={() => dispatch(addTrackToFavouritesAction({...props.track, added_at: new Date()}))}
+            >
+              <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
+            </svg>
+          </div>
+        )}
+        {durationCalculator(props.duration)}
+      </Col>
     </Row>
   );
 };

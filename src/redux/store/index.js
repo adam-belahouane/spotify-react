@@ -7,6 +7,7 @@ import { encryptTransform } from "redux-persist-transform-encrypt";
 import initialSong from "./initialSong.json"
 import initialQueue from "./initialQueue.json"
 import { mediaReducer } from "../reducers/media";
+import { favouritesReducer } from "../reducers/favourites";
 
 const aComposeThatAlwaysWorks =
   window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -20,6 +21,12 @@ export const initialState = {
     queue: initialQueue,
     play: false,
   },
+  favourites: {
+    tracks:[],
+    albums:[],
+    playlists: [],
+    artists: [],
+  }
 };
 
 const persistConfig = {
@@ -34,7 +41,8 @@ const persistConfig = {
 
 const mainReducer = combineReducers({
   login: loginReducer,
-  media: mediaReducer
+  media: mediaReducer,
+  favourites: favouritesReducer
 });
 
 const persistedMainReducer = persistReducer(persistConfig, mainReducer);
